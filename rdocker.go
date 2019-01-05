@@ -34,10 +34,12 @@ func main() {
 }
 
 func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	req.URL.Host = "unix:///var/run/docker.sock"
 	resp, err := r.client.Do(req)
 	if err != nil {
 		w.WriteHeader(http.StatusBadGateway)
 		_, _ = w.Write([]byte(err.Error()))
+		return
 	}
 	for k := range resp.Header {
 		w.Header().Add(k, resp.Header.Get(k))
