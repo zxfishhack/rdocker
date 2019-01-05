@@ -38,6 +38,7 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	//req.URL.Host = "unix://"
 	req.URL.Scheme = "http"
 	req.URL.Host = "/var/run/docker.sock"
+	req.RequestURI = ""
 
 	if req.Header.Get("Upgrade") == "tcp" && req.Header.Get("Connection") == "Upgrade" {
 		//hijack
