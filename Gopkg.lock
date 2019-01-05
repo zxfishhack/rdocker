@@ -2,116 +2,16 @@
 
 
 [[projects]]
-  digest = "1:f9ae348e1f793dcf9ed930ed47136a67343dbd6809c5c91391322267f4476892"
-  name = "github.com/Microsoft/go-winio"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "97e4973ce50b2ff5f09635a57e2b88a037aae829"
-  version = "v0.4.11"
-
-[[projects]]
-  digest = "1:4ddc17aeaa82cb18c5f0a25d7c253a10682f518f4b2558a82869506eec223d76"
-  name = "github.com/docker/distribution"
-  packages = [
-    "digestset",
-    "reference",
-  ]
-  pruneopts = "UT"
-  revision = "40b7b5830a2337bb07627617740c0e39eb92800c"
-  version = "v2.7.0"
-
-[[projects]]
-  digest = "1:57cba88fa5787776b41b67438eead400a0d3ee44b03f2ecfa3c088ade20b9fd2"
-  name = "github.com/docker/docker"
-  packages = [
-    "api/types",
-    "api/types/blkiodev",
-    "api/types/container",
-    "api/types/events",
-    "api/types/filters",
-    "api/types/mount",
-    "api/types/network",
-    "api/types/reference",
-    "api/types/registry",
-    "api/types/strslice",
-    "api/types/swarm",
-    "api/types/time",
-    "api/types/versions",
-    "api/types/volume",
-    "pkg/tlsconfig",
-  ]
-  pruneopts = "UT"
-  revision = "092cba3727bb9b4a2f0e922cd6c0f93ea270e363"
-  version = "v1.13.1"
-
-[[projects]]
-  digest = "1:811c86996b1ca46729bad2724d4499014c4b9effd05ef8c71b852aad90deb0ce"
-  name = "github.com/docker/go-connections"
-  packages = [
-    "nat",
-    "sockets",
-    "tlsconfig",
-  ]
-  pruneopts = "UT"
-  revision = "7395e3f8aa162843a74ed6d48e79627d9792ac55"
-  version = "v0.4.0"
-
-[[projects]]
-  digest = "1:6f82cacd0af5921e99bf3f46748705239b36489464f4529a1589bc895764fb18"
-  name = "github.com/docker/go-units"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "47565b4f722fb6ceae66b95f853feed578a4a51c"
-  version = "v0.3.3"
-
-[[projects]]
-  digest = "1:beddd348fbf818aa7e2d4bcb8be91970b89ee4d6be89511c7d848379caf0bfeb"
-  name = "github.com/moby/moby"
-  packages = ["client"]
-  pruneopts = "UT"
-  revision = "092cba3727bb9b4a2f0e922cd6c0f93ea270e363"
-  version = "v1.13.1"
-
-[[projects]]
-  digest = "1:ee4d4af67d93cc7644157882329023ce9a7bcfce956a079069a9405521c7cc8d"
-  name = "github.com/opencontainers/go-digest"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "279bed98673dd5bef374d3b6e4b09e2af76183bf"
-  version = "v1.0.0-rc1"
-
-[[projects]]
-  digest = "1:cf31692c14422fa27c83a05292eb5cbe0fb2775972e8f1f8446a71549bd8980b"
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "ba968bfe8b2f7e042a574c888954fccecfa385b4"
-  version = "v0.8.1"
-
-[[projects]]
   branch = "master"
-  digest = "1:3866deb325971ae774d5844b70f058923b7757cd2eec6db2bd6d028143f6b65f"
-  name = "golang.org/x/net"
-  packages = [
-    "context",
-    "context/ctxhttp",
-    "internal/socks",
-    "proxy",
-  ]
+  digest = "1:b521f10a2d8fa85c04a8ef4e62f2d1e14d303599a55d64dabf9f5a02f84d35eb"
+  name = "golang.org/x/sync"
+  packages = ["errgroup"]
   pruneopts = "UT"
-  revision = "927f97764cc334a6575f4b7a1584a147864d5723"
-
-[[projects]]
-  branch = "master"
-  digest = "1:68a4638398cf8c864a6aa50c8853ebe7935f939aa3acf7e44cb35b67852e9fef"
-  name = "golang.org/x/sys"
-  packages = ["windows"]
-  pruneopts = "UT"
-  revision = "badf5585203e739f88c2c6cd34188a6f54b5d619"
+  revision = "37e7f081c4d4c64e13b10787722085407fe5d15f"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/moby/moby/client"]
+  input-imports = ["golang.org/x/sync/errgroup"]
   solver-name = "gps-cdcl"
   solver-version = 1

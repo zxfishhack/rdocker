@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"golang.org/x/sync/errgroup"
 	"io"
 	"log"
 	"net"
@@ -62,6 +63,12 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+		_, err = cc.Write(b)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadGateway)
+			return
+		}
+
 		conn, bufrw, err := hj.Hijack()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -70,11 +77,12 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		// Don't forget to close the connection:
 		defer conn.Close()
 
-		cc.Write(b)
-		go io.Copy(cc, conn)
-		go io.Copy(bufrw, cc)
-		select {
-		case <-req.Context().Done():
+		g := errgroup.Group{}
+		g.Go(copy(cc, conn))
+		g.Go(copy(bufrw, cc))
+		err = g.Wait()
+		if err != nil {
+			log.Printf("proxy tcp error %v", err)
 		}
 	} else {
 		resp, err := r.client.Do(req)
@@ -89,5 +97,12 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(resp.StatusCode)
 		_, _ = io.Copy(w, resp.Body)
 		_ = resp.Body.Close()
+	}
+}
+
+func copy(dst io.Writer, src io.Reader) func() error {
+	return func() error {
+		_, err := io.Copy(dst, src)
+		return err
 	}
 }
