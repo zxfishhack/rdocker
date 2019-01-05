@@ -48,16 +48,6 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.Header().Add(k, resp.Header.Get(k))
 	}
 	w.WriteHeader(resp.StatusCode)
-	buf := make([]byte, 256)
-	for {
-		n, err := resp.Body.Read(buf)
-		if err != nil {
-			break
-		}
-		_, _ = w.Write(buf[0:n])
-	}
-	if err != io.EOF {
-
-	}
+	io.Copy(w, resp.Body)
 	_ = resp.Body.Close()
 }
