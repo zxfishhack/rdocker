@@ -58,6 +58,7 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			break
 		}
+		log.Print(string(buf[0:n]))
 		_, _ = w.Write(buf[0:n])
 		flusher.Flush()
 	}
