@@ -48,6 +48,21 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.Header().Add(k, resp.Header.Get(k))
 	}
 	w.WriteHeader(resp.StatusCode)
-	_, _ = io.Copy(w, resp.Body)
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		panic("expected http.ResponseWriter to be an http.Flusher")
+	}
+	buf := make([]byte, 256)
+	for {
+		n, err := resp.Body.Read(buf)
+		if err != nil {
+			break
+		}
+		_, _ = w.Write(buf[0:n])
+		flusher.Flush()
+	}
+	if err != io.EOF {
+
+	}
 	_ = resp.Body.Close()
 }
