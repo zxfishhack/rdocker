@@ -38,6 +38,7 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	req.RequestURI = ""
 	req.URL.Scheme = "http"
 	req.URL.Host = "/var/run/docker.sock"
+	log.Print(req.Header)
 	resp, err := r.client.Do(req)
 	if err != nil {
 		w.WriteHeader(http.StatusBadGateway)
@@ -48,6 +49,6 @@ func (r *rdocker) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.Header().Add(k, resp.Header.Get(k))
 	}
 	w.WriteHeader(resp.StatusCode)
-	io.Copy(w, resp.Body)
+	_, _ = io.Copy(w, resp.Body)
 	_ = resp.Body.Close()
 }
